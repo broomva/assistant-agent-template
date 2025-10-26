@@ -42,7 +42,7 @@ function Button({
   size,
   asChild = false,
   ...props
-}: React.ComponentProps<"button"> &
+}: Omit<React.ComponentProps<"button">, "popover"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
   }) {
