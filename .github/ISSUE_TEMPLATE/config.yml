@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Ask a Question
+    url: https://github.com/yourusername/yourrepo/discussions
+    about: Ask questions and discuss with the community
+  - name: Documentation
+    url: https://github.com/yourusername/yourrepo/blob/main/CLAUDE.md
+    about: Read the comprehensive project documentation

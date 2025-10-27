@@ -1,7 +1,32 @@
 {
-  "name": "assistant-ui-starter",
-  "version": "0.1.0",
-  "private": true,
+  "name": "chef-assistant-template",
+  "version": "1.0.0",
+  "description": "AI Cooking Assistant built with Mastra AI, Anthropic Claude, and Assistant-UI",
+  "keywords": [
+    "ai",
+    "assistant",
+    "mastra",
+    "anthropic",
+    "claude",
+    "assistant-ui",
+    "nextjs",
+    "typescript",
+    "generative-ui"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OWNER/REPO.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OWNER/REPO/issues"
+  },
+  "homepage": "https://github.com/OWNER/REPO#readme",
+  "license": "MIT",
+  "private": false,
+  "engines": {
+    "node": ">=20.0.0",
+    "bun": ">=1.2.0"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -58,6 +83,5 @@
     "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "^4",
     "typescript": "^5"
-  },
-  "packageManager": "pnpm@10.18.3+sha512.bbd16e6d7286fd7e01f6b3c0b3c932cda2965c06a908328f74663f10a9aea51f1129eea615134bf992831b009eabe167ecb7008b597f40ff9bc75946aadfb08d"
+  }
 }
