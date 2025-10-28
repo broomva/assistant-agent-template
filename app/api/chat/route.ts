@@ -2,20 +2,33 @@ import { mastra } from "@/mastra";
 
 export const maxDuration = 30;
 
+/**
+ * Multi-Agent Chat API Route
+ *
+ * Supports agent selection via request body while maintaining
+ * backward compatibility (defaults to chefAgent).
+ *
+ * Usage:
+ * - No agentName: Uses chefAgent (default)
+ * - With agentName: Uses specified agent
+ */
 export async function POST(req: Request) {
-  const { messages, threadId } = await req.json();
+  const { messages, threadId, agentName = "chefAgent" } = await req.json();
 
   // Generate a thread ID if not provided
   const actualThreadId = threadId || `thread-${Date.now()}`;
 
-  // Get the agent with memory enabled
-  const agent = mastra.getAgent("chefAgent");
+  // Get the selected agent (with fallback to default)
+  const agent = mastra.getAgent(agentName);
+
+  // Log for debugging
+  console.log(`[Chat API] Agent: ${agentName}, Thread: ${actualThreadId}`);
 
   // Stream with memory context
   const result = await agent.stream(messages, {
     memory: {
       thread: actualThreadId,
-      resource: "user", // You can make this dynamic per user if needed
+      resource: "user", // Can be dynamic: userId from auth
     },
   });
 
