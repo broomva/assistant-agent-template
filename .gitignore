@@ -63,3 +63,5 @@ Thumbs.db
 
 # Bun
 .bun/
+
+.mastra/

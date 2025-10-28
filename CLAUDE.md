@@ -32,7 +32,7 @@ This is a full-stack AI cooking assistant built with Next.js, Mastra AI framewor
 ```
 User Input (Assistant-UI)
   ↓
-API Route (/app/api/chat/route.ts)
+API Route (/src/app/api/chat/route.ts)
   ↓
 Mastra Agent (with memory)
   ↓
@@ -68,7 +68,7 @@ const result = await agent.stream(messages, {
 
 ### Agent Configuration
 
-The chef agent (`mastra/agents/chefAgent.ts`) is configured with:
+The chef agent (`src/mastra/agents/chefAgent.ts`) is configured with:
 - **Instructions**: System prompt defining agent behavior
 - **Model**: GPT-4o-mini for cost-effective responses
 - **Tools**: Custom tools for recipe finding and nutrition info
@@ -109,7 +109,7 @@ Consider implementing a RAG (Retrieval Augmented Generation) pipeline with:
 
 ### Generative UI
 
-Custom UI components (`components/assistant-ui/tool-ui/`) render when tools are called:
+Custom UI components (`src/components/assistant-ui/tool-ui/`) render when tools are called:
 
 - **RecipeToolUI**: Animated recipe cards with ingredients, instructions, difficulty
 - **NutritionToolUI**: Nutritional information with color-coded nutrients
@@ -123,29 +123,31 @@ These components use `makeAssistantToolUI` from Assistant-UI to:
 
 ```
 assistant/
-├── app/
-│   ├── api/chat/route.ts         # API endpoint for chat
-│   ├── assistant.tsx              # Main assistant component
-│   ├── page.tsx                   # Home page
-│   └── layout.tsx                 # Root layout
-├── components/
-│   ├── assistant-ui/
-│   │   ├── tool-ui/              # Generative UI components
-│   │   │   ├── recipe-tool-ui.tsx
-│   │   │   └── nutrition-tool-ui.tsx
-│   │   ├── thread.tsx            # Chat thread component
-│   │   └── thread-list.tsx       # Thread list sidebar
-│   └── ui/                       # Shared UI components
-├── mastra/
-│   ├── agents/
-│   │   └── chefAgent.ts          # Chef agent definition
-│   ├── tools/
-│   │   └── recipeTools.ts        # Recipe & nutrition tools
-│   ├── memory.ts                 # Memory configuration
-│   └── index.ts                  # Mastra instance
-├── lib/
-│   └── utils.ts                  # Utility functions
-└── local.db                      # SQLite database (auto-created)
+├── src/
+│   ├── app/
+│   │   ├── api/chat/route.ts         # API endpoint for chat
+│   │   ├── assistant.tsx              # Main assistant component
+│   │   ├── page.tsx                   # Home page
+│   │   └── layout.tsx                 # Root layout
+│   ├── components/
+│   │   ├── assistant-ui/
+│   │   │   ├── tool-ui/              # Generative UI components
+│   │   │   │   ├── recipe-tool-ui.tsx
+│   │   │   │   └── nutrition-tool-ui.tsx
+│   │   │   ├── thread.tsx            # Chat thread component
+│   │   │   └── thread-list.tsx       # Thread list sidebar
+│   │   └── ui/                       # Shared UI components
+│   ├── mastra/
+│   │   ├── agents/
+│   │   │   └── chefAgent.ts          # Chef agent definition
+│   │   ├── tools/
+│   │   │   └── recipeTools.ts        # Recipe & nutrition tools
+│   │   ├── memory.ts                 # Memory configuration
+│   │   └── index.ts                  # Mastra instance
+│   ├── lib/
+│   │   └── utils.ts                  # Utility functions
+│   └── hooks/                        # Custom React hooks
+└── local.db                          # SQLite database (auto-created)
 ```
 
 ## Environment Variables
@@ -234,6 +236,7 @@ __tests__/
 └── api/
     └── chat.test.ts
 ```
+Note: Test files mirror the `src/` structure but remain in the root-level `__tests__/` directory.
 
 Example test:
 ```typescript
@@ -273,9 +276,9 @@ test('user can get recipe suggestions', async ({ page }) => {
 
 Test Mastra tools in isolation:
 ```typescript
-// mastra/tools/__tests__/recipeTools.test.ts
+// __tests__/mastra/tools/recipeTools.test.ts
 import { describe, it, expect } from 'vitest';
-import { findRecipeTool } from '../recipeTools';
+import { findRecipeTool } from '@/mastra/tools/recipeTools';
 
 describe('findRecipeTool', () => {
   it('returns structured recipe data', async () => {
@@ -358,7 +361,7 @@ Messages are automatically:
 
 ### Adding a New Tool
 
-1. **Define the tool** (`mastra/tools/yourTool.ts`):
+1. **Define the tool** (`src/mastra/tools/yourTool.ts`):
 ```typescript
 export const yourTool = createTool({
   id: "your_tool",
@@ -376,14 +379,14 @@ export const yourTool = createTool({
 });
 ```
 
-2. **Add to agent** (`mastra/agents/chefAgent.ts`):
+2. **Add to agent** (`src/mastra/agents/chefAgent.ts`):
 ```typescript
 tools: {
   your_tool: yourTool,
 }
 ```
 
-3. **Create UI component** (`components/assistant-ui/tool-ui/your-tool-ui.tsx`):
+3. **Create UI component** (`src/components/assistant-ui/tool-ui/your-tool-ui.tsx`):
 ```typescript
 export const YourToolUI = makeAssistantToolUI({
   toolName: "your_tool",
@@ -409,7 +412,7 @@ export const YourToolUI = makeAssistantToolUI({
 ```
 **Important**: Always use optional chaining (`args?.property`) when accessing args to prevent runtime errors!
 
-4. **Register in assistant** (`app/assistant.tsx`):
+4. **Register in assistant** (`src/app/assistant.tsx`):
 ```typescript
 <AssistantRuntimeProvider runtime={runtime}>
   <YourToolUI />
@@ -419,7 +422,7 @@ export const YourToolUI = makeAssistantToolUI({
 
 ### Customizing Agent Behavior
 
-Edit `mastra/agents/chefAgent.ts`:
+Edit `src/mastra/agents/chefAgent.ts`:
 - **Instructions**: Change system prompt
 - **Model**: Switch LLM provider
 - **Tools**: Add/remove capabilities

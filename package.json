@@ -32,6 +32,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "mastra": "mastra dev",
+    "mastra:build": "mastra build",
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write ."
   },
