@@ -1,6 +1,10 @@
 import { Agent } from "@mastra/core/agent";
 import { defaultModels } from "../models";
 import { memory } from "../memory";
+import { chefAgent } from "./chefAgent";
+import { mealPlannerAgent } from "./mealPlannerAgent";
+import { nutritionExpertAgent } from "./nutritionExpertAgent";
+import { sommelierAgent } from "./sommelierAgent";
 
 /**
  * Orchestrator Agent (Router Pattern)
@@ -64,6 +68,13 @@ Example responses:
 
   // No tools - this agent focuses on routing
   tools: {},
+
+  agents: {
+    "chef-agent": chefAgent,
+    "nutrition-expert": nutritionExpertAgent,
+    "meal-planner": mealPlannerAgent,
+    sommelier: sommelierAgent,
+  },
 
   memory,
 });
